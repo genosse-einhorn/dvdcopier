@@ -1,0 +1,14 @@
+CXX=i686-w64-mingw32.static-g++
+PKGCONFIG=i686-w64-mingw32.static-pkg-config
+
+CFLAGS=-Og -Wall -Wextra -std=c++03 -DUNICODE -D_UNICODE -municode -D_FILE_OFFSET_BITS=64
+CFLAGS_PKG=$$($(PKGCONFIG) --cflags dvdread)
+LDFLAGS=-lole32
+LDFLAGS_PKG=$$($(PKGCONFIG) --libs dvdread)
+
+out/cmdtool.exe: cmdtool.c
+	$(CXX) $(CFLAGS) $(CFLAGS_PKG) -o $@ $< $(LDFLAGS) $(LDFLAGS_PKG)
+
+.PHONY: clean
+clean:
+	rm -f out/cmdtool.exe
